@@ -18,12 +18,11 @@ Route::get('logout', 'Api\Auth\LoginController@logout');
 Route::group(['namespace' => 'Api\Mobile', 'prefix' => 'mobile', 'middleware' => ['auth']], function () {
     Route::get('user', 'UserController@index');
     Route::get('dates', 'UserController@dates');
-});//attım linki tmm indiriyom bunu bi herokuya yükle yada sunucudan link al da at onu bana
-//link alma alıyom da çalışmamıştı tekrar deneyeyim tmm attım
-//bende bi deneyeyim mobilden
-
+});
+//bi bunu gönderirmisin herokuya    tamam
 Route::group(['namespace' => 'Api\Desktop', 'prefix' => 'admin', 'middleware' => ['auth', 'admin']], function () {
     Route::prefix('users')->group(function () {
+        Route::get('bilgilerim', 'UserController@index');
         Route::get('/', 'UserController@users');
         Route::post('ekle', 'UserController@ekle');
         Route::post('guncelle/{id}', 'UserController@guncelle');
@@ -37,7 +36,7 @@ Route::group(['namespace' => 'Api\Desktop', 'prefix' => 'admin', 'middleware' =>
         Route::get('sil/{id}', 'DietController@sil');
     });
 
-    Route::prefix('egzersiz')->group(function () {
+    Route::prefix('exercise')->group(function () {
         Route::get('', 'ExerciseController@index');
         Route::post('ekle', 'ExerciseController@ekle');
         Route::post('guncelle/{id}', 'ExerciseController@guncelle');
