@@ -1,11 +1,12 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Api\Desktop;
 
 use Auth;
 use App\User;
 use App\Dates;
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
 
 class UserController extends Controller
 {
@@ -42,6 +43,29 @@ class UserController extends Controller
             'end_date' => $request->end_date,
         ]);
 
+        return response()->json(['durum' => true]);
+    }
+
+    public function guncelle(Request $request, $id)
+    {
+        $user = User::find($id);
+        $user->name = $request->name;
+        $user->phone_number = $request->phone_number;
+        $user->email = $request->email;
+
+        if ($request->password) {
+            $user->password = bcrypt($request->password);
+        }
+
+        $user->save();
+
+        return response()->json(['durum' => true]);
+    }
+
+    public function sil($id)
+    {
+        $user = User::find($id);
+        $user->delete();
         return response()->json(['durum' => true]);
     }
 }
