@@ -1,0 +1,75 @@
+<?php
+
+namespace App\Http\Controllers\Api\Auth;
+
+use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
+use App\Notifications\PasswordReset;
+use App\User;
+use Auth;
+use Hash;
+
+class PasswordController extends Controller
+{
+    public function post(Request $request)
+    {
+      $this->validate($request, [
+        'oldPassword' => 'required',
+        'password' => 'required|min:6',
+        'password_confirmation' => 'required|min:6|same:password'
+      ]);
+
+      $user = Auth::user();
+
+      if (Hash::check($request->oldPassword, $user->password)) {
+        $user->password = bcrypt($request->password);
+        $user->save();
+
+        return response()->json(true);
+
+      }
+      else {
+        return response()->json([
+          'message' => 'Warning!',
+          'errors' => [
+            'password' => 'Your old password is wrong.'
+          ]
+        ], 422);
+      }
+
+      return response()->json([
+        'message' => 'There is a problem!',
+        'errors' => [
+          'password' => 'Please try again later.'
+        ]
+      ], 422);
+    }
+
+    public function resetPost(Request $request)
+    {
+      try {
+        $password = str_random(6);
+        $user = User::where('email', $request->email)->first();
+        $user->password = bcrypt($password);
+        $user->save();
+
+        $user->notify(new PasswordReset($user->email, $password));
+
+        return response()->json([
+          'message' => 'Successful!',
+          'errors' => [
+            'password' => 'Your new password is sent to your e-mail address.'
+          ]
+        ], 422);
+
+      } catch (\Exception $e) {
+        return response()->json([
+          'message' => 'There is a problem!',
+          'errors' => [
+            'password' => $e->errorMessage()
+          ]
+        ], 422);
+      }
+
+    }
+}
