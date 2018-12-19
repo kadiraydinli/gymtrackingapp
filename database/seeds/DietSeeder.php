@@ -13,60 +13,58 @@ class DietSeeder extends Seeder
     public function run()
     {
         Diet::add([
-            'day' => 1,
-            'note' => 'Peynir',
+            'user_id' => 2,
+            'type' => 'Kilo verme',
             'meal' => 'Sabah',
-            'user_id' => 1
+            'content' => 'Elma ye',
+            'time' => '08:00',
+            'start_date' => '2018-12-08',
+            'end_date' => '2018-12-08'
         ]);
         Diet::add([
-            'day' => 1,
-            'note' => 'Zeytin',
+            'user_id' => 2,
+            'type' => 'Kilo verme',
+            'meal' => 'Kuşluk',
+            'content' => 'Armut ye',
+            'time' => '10:00',
+            'start_date' => '2018-12-08',
+            'end_date' => '2018-12-08'
+        ]);
+        Diet::add([
+            'user_id' => 2,
+            'type' => 'Kilo verme',
             'meal' => 'Öğle',
-            'user_id' => 1
+            'content' => 'Yemek ye',
+            'time' => '12:00',
+            'start_date' => '2018-12-08',
+            'end_date' => '2018-12-08'
         ]);
         Diet::add([
-            'day' => 1,
-            'note' => 'Çorba',
+            'user_id' => 2,
+            'type' => 'Kilo verme',
+            'meal' => 'İkindi',
+            'content' => 'Yemek yeme',
+            'time' => '16:00',
+            'start_date' => '2018-12-08',
+            'end_date' => '2018-12-08'
+        ]);
+        Diet::add([
+            'user_id' => 2,
+            'type' => 'Kilo verme',
             'meal' => 'Akşam',
-            'user_id' => 1
-        ]);
-
-        Diet::add([
-            'day' => 2,
-            'note' => 'Peynir1',
-            'meal' => 'Sabah',
-            'user_id' => 1
+            'content' => 'ye ye',
+            'time' => '20:00',
+            'start_date' => '2018-12-08',
+            'end_date' => '2018-12-08'
         ]);
         Diet::add([
-            'day' => 2,
-            'note' => 'Zeytin1',
-            'meal' => 'Öğle',
-            'user_id' => 1
-        ]);
-        Diet::add([
-            'day' => 2,
-            'note' => 'Çorba1',
-            'meal' => 'Akşam',
-            'user_id' => 1
-        ]);
-
-        Diet::add([
-            'day' => 1,
-            'note' => 'Peynir',
-            'meal' => 'Sabah',
-            'user_id' => 2
-        ]);
-        Diet::add([
-            'day' => 1,
-            'note' => 'Zeytin',
-            'meal' => 'Öğle',
-            'user_id' => 2
-        ]);
-        Diet::add([
-            'day' => 1,
-            'note' => 'Çorba',
-            'meal' => 'Akşam',
-            'user_id' => 2
+            'user_id' => 2,
+            'type' => 'Kilo verme',
+            'meal' => 'Ara',
+            'content' => 'Ekmek',
+            'time' => '23:00',
+            'start_date' => '2018-12-08',
+            'end_date' => '2018-12-08'
         ]);
     }
 }

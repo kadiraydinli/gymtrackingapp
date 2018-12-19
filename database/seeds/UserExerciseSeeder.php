@@ -20,5 +20,12 @@ class UserExerciseSeeder extends Seeder
             'reps' => 10
         ]);
 
+        UserExercise::add([
+            'exercise_id' => 1,
+            'user_id' => 2,
+            'exercise_day' => 3,
+            'sets' => 3,
+            'reps' => 20
+        ]);
     }
 }

@@ -17,7 +17,11 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'phone_number', 'password', 'admin'
+        'name', 'email', 'phone_number', 'admin', 'password'
+    ];
+
+    protected $hidden = [
+        'password', 'remember_token',
     ];
 
     /**
@@ -37,5 +41,15 @@ class User extends Authenticatable
         $filtered = array_add($filtered, 'updated_at', now());
         $id = static::insertGetId($filtered);
         return static::findOrFail($id);
+    }
+
+    public function userExercise()
+    {
+        return $this->hasMany('App\UserExercise', 'user_id', 'id');
+    }
+
+    public function dates()
+    {
+        return $this->hasMany('App\Dates', 'user_id', 'id');
     }
 }

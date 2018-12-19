@@ -10,7 +10,14 @@
 | contains the "web" middleware group. Now create something great!
 |
  */
+use DB;
 
 Route::get('/', function () {
     return view('welcome');
+});
+
+
+Route::get('/timeReset', function () {
+    DB::table('diet')->update(['control' => 0]);
+    return 'true';
 });

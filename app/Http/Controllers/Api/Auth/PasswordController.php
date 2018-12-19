@@ -11,65 +11,59 @@ use Hash;
 
 class PasswordController extends Controller
 {
-    public function post(Request $request)
+    public function change(Request $request)
     {
-      $this->validate($request, [
-        'oldPassword' => 'required',
-        'password' => 'required|min:6',
-        'password_confirmation' => 'required|min:6|same:password'
-      ]);
+        $this->validate($request, [
+            'oldPassword' => 'required',
+            'password' => 'required|min:6',
+            'password_confirmation' => 'required|min:6|same:password'
+        ]);
 
-      $user = Auth::user();
+        $user = Auth::user();
 
-      if (Hash::check($request->oldPassword, $user->password)) {
-        $user->password = bcrypt($request->password);
-        $user->save();
+        if (Hash::check($request->oldPassword, $user->password)) {
+            $user->password = bcrypt($request->password);
+            $user->save();
 
-        return response()->json(true);
+            return response()->json(true);
 
-      }
-      else {
+        } else {
+            return response()->json([
+                'message' => 'Dikkat!',
+                'errors' => [
+                    'password' => 'Eski şifreniz yanlış.'
+                ]
+            ], 422);
+        }
+
         return response()->json([
-          'message' => 'Warning!',
-          'errors' => [
-            'password' => 'Your old password is wrong.'
-          ]
+            'message' => 'Bir sorun var!',
+            'errors' => [
+                'password' => 'Lütfen daha sonra tekrar deneyiniz.'
+            ]
         ], 422);
-      }
-
-      return response()->json([
-        'message' => 'There is a problem!',
-        'errors' => [
-          'password' => 'Please try again later.'
-        ]
-      ], 422);
     }
 
-    public function resetPost(Request $request)
+    public function reset(Request $request)
     {
-      try {
-        $password = str_random(6);
-        $user = User::where('email', $request->email)->first();
-        $user->password = bcrypt($password);
-        $user->save();
+        try {
+            $password = str_random(6);
+            $user = User::where('email', $request->email)->first();
+            $user->password = bcrypt($password);
+            $user->save();
 
-        $user->notify(new PasswordReset($user->email, $password));
+            $user->notify(new PasswordReset($user->email, $password));
 
-        return response()->json([
-          'message' => 'Successful!',
-          'errors' => [
-            'password' => 'Your new password is sent to your e-mail address.'
-          ]
-        ], 422);
+            return response()->json(true);
 
-      } catch (\Exception $e) {
-        return response()->json([
-          'message' => 'There is a problem!',
-          'errors' => [
-            'password' => $e->errorMessage()
-          ]
-        ], 422);
-      }
+        } catch (\Exception $e) {
+            return response()->json([
+                'message' => 'There is a problem!',
+                'errors' => [
+                    'password' => 'Bir hata oluştu.'
+                ]
+            ], 422);
+        }
 
     }
 }

@@ -29,7 +29,7 @@ class UserSeeder extends Seeder
             'phone_number' => '05071539337',
             'email' => 'yavuzguloglu@outlook.com',
             'password' => bcrypt('123456'),
-            'admin' => false
+            'admin' => true
         ]);
         User::add([
             'name' => 'Samet Emiroğlu',

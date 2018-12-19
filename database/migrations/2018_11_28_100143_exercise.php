@@ -16,7 +16,7 @@ class Exercise extends Migration
         Schema::create('exercise', function (Blueprint $table) {
             $table->increments('id');
             $table->string('exercise_name');
-            $table->string('explanation');
+            $table->text('explanation');
             $table->string('region');
             $table->string('image_link');
             $table->timestamp('added_at')->nullable();
